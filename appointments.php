@@ -4,22 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Today's Schedule</title>
-     <style>
-
-td, th {
-  border: 1px solid black;
-  text-align: left;
-  padding: 8px;
-}
-
-</style>
+ <link rel="stylesheet" href="index.css">
 </head>
 <body >
       <?php
 include "nav.php"
 
 ?>
-    <h2 style="text-align:center;color:blue">Today's Schedule <span>(<?php echo date("d-m-y"); ?>)</span></h2>
+    <h2 >Today's Schedule <span>(<?php echo date("d-m-y"); ?>)</span></h2>
 
     <table style="width:90% ;margin :20px auto;">
   <tr>

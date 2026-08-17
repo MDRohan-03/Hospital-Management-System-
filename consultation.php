@@ -4,15 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation Hours</title>
-    <style>
+     <link rel="stylesheet" href="index.css">
 
-td, th {
-  border: 1px solid black;
-  text-align: left;
-  padding: 8px;
-}
-
-</style>
 </head>
 <body>
       <?php
@@ -21,7 +14,7 @@ include "nav.php"
 ?>
    <div style="width: 500px; margin: 20px auto; padding: 20px; border: 1px solid black; border-radius: 10px;">
 
- <h1 style="text-align: center; color:blue">Consultation Hours</h1>
+ <h1>Consultation Hours</h1>
 
 <form method="post" action="consultation.php">
     <label for="day">Select a day:</label>
@@ -50,7 +43,7 @@ include "nav.php"
 
 
 <!-- table -->
- <h3 style="text-align: center; color:blue">Availability</h3>
+ <h3 >Availability</h3>
 
 <table>
     <tr>
