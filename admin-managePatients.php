@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Patient List</h2>
 
         <?php if ($message != "") { ?>
-            <div class="message success">
+             <div class="message">
                 <?php echo htmlspecialchars($message); ?>
             </div>
         <?php } ?>

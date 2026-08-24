@@ -77,11 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="table">
                 <h2>Admin Information</h2>
 
-                <?php if ($message != "") { ?>
-                    <div class="message <?php echo $messageType; ?>">
-                        <?php echo htmlspecialchars($message); ?>
-                    </div>
-               <?php } ?>
+               <?php if ($errormsg != "") { ?>
+
+    <div class="message">
+        <?php echo htmlspecialchars($errormsg); ?>
+    </div>
+
+<?php } ?>
 
                <form method="POST"onsubmit="return validateProfile();">
         

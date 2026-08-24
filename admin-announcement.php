@@ -63,11 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="table">
                 <h2>Post Hospital-wide Announcement</h2>
 
-                <?php if ($message != "") { ?>
-                    <div class="message <?php echo $messageType; ?>">
-                        <?php echo htmlspecialchars($message); ?>
-                    </div>
-                <?php } ?>
+                 <?php if ($errormsg != "") { ?>
+
+    <div class="message">
+        <?php echo htmlspecialchars($errormsg); ?>
+    </div>
+
+<?php } ?>
 
                 <form method="POST"onsubmit="return validateAnnouncementForm();">
   
@@ -77,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <label for="notice">Notice Body</label>
-            <textareaid="notice"name="notice"rows="8"placeholder="Write announcement here...">
+            <textarea id="notice"name="notice"rows="8"placeholder="Write announcement here...">
                 <?php echo htmlspecialchars($notice); ?>
             </textarea>
 
