@@ -1,0 +1,26 @@
+li a {
+    color: white;
+    text-decoration: none;
+}
+h1,h2,h3{
+    text-align: center;
+    color:green;
+}
+td, th {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+ul{
+    background:green ;
+    display:flex ;
+    margin:0;
+    justify-content: space-between;
+    padding:0 20px;
+    list-style: none;
+    padding: 10px 20px;
+}
+table{
+    width:90% ;
+    margin :20px auto;
+}
