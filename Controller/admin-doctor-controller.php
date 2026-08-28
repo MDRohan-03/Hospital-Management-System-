@@ -1,28 +1,28 @@
 <?php
-
 session_start();
 
-$_SESSION['nameErrMsg'] = "";
-$_SESSION['emailErrMsg'] = "";
-$_SESSION['passwordErrMsg'] = "";
-$_SESSION['phoneErrMsg'] = "";
-$_SESSION['specializationErrMsg'] = "";
-$_SESSION['licenseErrMsg'] = "";
-$_SESSION['feeErrMsg'] = "";
-$_SESSION['yoeErrMsg'] = "";
-$_SESSION['bioErrMsg'] = "";
-
+// Only process on POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // Set flag that form was submitted
+    $_SESSION['form_submitted'] = true;
+    
+    // Clear previous error messages
+    $_SESSION['nameErrMsg'] = "";
+    $_SESSION['emailErrMsg'] = "";
+    $_SESSION['passwordErrMsg'] = "";
+    $_SESSION['phoneErrMsg'] = "";
+    $_SESSION['specializationErrMsg'] = "";
+    $_SESSION['feeErrMsg'] = "";
+    $_SESSION['bioErrMsg'] = "";
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $phone = $_POST['phone'];
-    $specialization = $_POST['specialization'];
-    $licenseNumber = $_POST['licenseNumber'];
-    $consultationFee = $_POST['consultationFee'];
-    $yoe = $_POST['yoe'];
-    $bio = $_POST['bio'];
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $specialization = $_POST['specialization'] ?? '';
+    $consultationFee = $_POST['consultationFee'] ?? '';
+    $bio = $_POST['bio'] ?? '';
 
     $flag = true;
 
@@ -74,35 +74,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($flag) {
-
         require "../Model/Doctor.php";
         $doctor = new Doctor();
-
+        
         $doctor->addDoctor(
             $name,
             $email,
             $password,
             $phone,
             $specialization,
-            $licenseNumber,
+            "LIC-" . rand(10000, 99999),
             $consultationFee,
-            $yoe,
+            5,
             $bio
         );
 
         $_SESSION['success'] = "Doctor added successfully.";
 
+        // Clear form data
         unset($_SESSION['name']);
         unset($_SESSION['email']);
         unset($_SESSION['phone']);
         unset($_SESSION['specialization']);
-        unset($_SESSION['licenseNumber']);
         unset($_SESSION['consultationFee']);
-        unset($_SESSION['yoe']);
         unset($_SESSION['bio']);
     }
 
     header("Location: ../View/admin/admin-add-doctor.php");
     exit();
 }
+
+// If not POST, redirect to the form
+header("Location: ../View/admin/admin-add-doctor.php");
+exit();
 ?>

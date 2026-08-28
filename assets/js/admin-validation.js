@@ -1,41 +1,31 @@
-//admin login
-
-function validateAdminLoginForm(p) {
-
-    let email = p.email.value;
-    let password = p.password.value;
-
+// admin login
+function validateAdminLoginForm(form) {
+    let email = form.email.value.trim();
+    let password = form.password.value.trim();
     let flag = true;
 
     if (email === "") {
         alert("Email is required.");
         flag = false;
-        return flag;
     }
 
     if (password === "") {
         alert("Password is required.");
         flag = false;
-        return flag;
     }
 
     return flag;
 }
 
-
-//add doctor
-function validateDoctorForm(p) {
-
-    let name = p.name.value;
-    let email = p.email.value;
-    let password = p.password.value;
-    let phone = p.phone.value;
-    let specialization = p.specialization.value;
-    let licenseNumber = p.licenseNumber.value;
-    let yoe = p.yoe.value;
-    let consultationFee = p.consultationFee.value;
-    let bio = p.bio.value;
-
+// add doctor
+function validateDoctorForm(form) {
+    let name = form.name.value.trim();
+    let email = form.email.value.trim();
+    let password = form.password.value.trim();
+    let phone = form.phone.value.trim();
+    let specialization = form.specialization.value;
+    let consultationFee = form.consultationFee.value.trim();
+    let bio = form.bio.value.trim();
     let flag = true;
 
     if (name === "") {
@@ -68,13 +58,6 @@ function validateDoctorForm(p) {
         return flag;
     }
 
-    if (licenseNumber === "") {
-        alert("Medical license number is required.");
-        flag = false;
-        return flag;
-    }
- 
-
     if (consultationFee === "") {
         alert("Consultation fee is required.");
         flag = false;
@@ -82,7 +65,7 @@ function validateDoctorForm(p) {
     }
 
     if (bio === "") {
-        alert("Professional bio is required.");
+        alert("Bio is required.");
         flag = false;
         return flag;
     }
@@ -90,64 +73,52 @@ function validateDoctorForm(p) {
     return flag;
 }
 
-
-//announcement
-
-function validateNoticeForm(p) {
-
-    let title = p.title.value;
-    let description = p.description.value;
-
+// announcement
+function validateNoticeForm(form) {
+    let title = form.title.value.trim();
+    let description = form.description.value.trim();
     let flag = true;
 
     if (title === "") {
         alert("Announcement title is required.");
         flag = false;
-        return flag;
     }
 
     if (description === "") {
         alert("Announcement description is required.");
         flag = false;
-        return flag;
     }
 
     return flag;
 }
 
-
-//admin profile
-function validateAdminProfileForm(p) {
-
-    let name = p.name.value;
-    let email = p.email.value;
-    let phone = p.phone.value;
-
+// admin profile
+function validateAdminProfileForm(form) {
+    let name = form.name.value.trim();
+    let email = form.email.value.trim();
+    let phone = form.phone.value.trim();
     let flag = true;
 
+    // Name validation
     if (name === "") {
         alert("Name is required.");
         flag = false;
         return flag;
-    }
+    } 
 
-    if (name.length < 3) {
-        alert("Name must be at least 3 characters.");
-        flag = false;
-        return flag;
-    }
-
+    // Email validation
     if (email === "") {
         alert("Email is required.");
         flag = false;
         return flag;
-    }
+    } 
 
+    // Phone validation
     if (phone === "") {
         alert("Phone number is required.");
         flag = false;
         return flag;
-    }
+    } 
 
     return flag;
 }

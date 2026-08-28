@@ -1,16 +1,17 @@
+ 
 <?php
 
 session_start();
 
-if (!isset($_SESSION['isLoggedIn']) || $_SESSION['isLoggedIn'] !== true) {
+if (!isset($_SESSION['isLoggedIn'])  ) {
 
     header("Location: ../View/auth/admin-login.php");
     exit();
-
+    
 }
 
-require_once __DIR__ . "/../Model/Doctor.php";
-require_once __DIR__ . "/../Model/Patient.php";
+require __DIR__ . "/../Model/Doctor.php";
+require __DIR__ . "/../Model/Patient.php";
 
 $doctor = new Doctor();
 $patient = new Patient();

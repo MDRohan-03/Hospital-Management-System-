@@ -34,6 +34,7 @@ include "nav.php"
         <div class="card">
             <h3>Active Doctors</h3>
             <p><?php echo $activeDoctors; ?></p>
+            
         </div>
 
         <div class="card">

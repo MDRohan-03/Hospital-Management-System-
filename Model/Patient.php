@@ -7,16 +7,16 @@ class Patient
             $_SESSION['patients'] = array(
                 array(
                     "id" => 1,
-                    "name" => "Joboraz",
-                    "email" => "joboraz@gmail.com",
+                    "name" => "abc",
+                    "email" => "xyz@gmail.com",
                     "phone" => "0187284290",
                     "status" => "Active",
                     "payment" => "Pending"
                 ),
                 array(
                     "id" => 2,
-                    "name" => "Raisa",
-                    "email" => "raisa@gmail.com",
+                    "name" => "xyz",
+                    "email" => "abc@gmail.com",
                     "phone" => "01712345678",
                     "status" => "Pending",
                     "payment" => "Pending"
