@@ -1,0 +1,80 @@
+<?php
+// controller/admin-doctorController.php
+
+session_start();
+
+//require_once __DIR__ . '/../model/User.php';
+//require_once __DIR__ . '/../model/Doctor.php';
+require_once __DIR__ . '/Validation.php';
+
+function handleAddDoctor($postData) {
+    $userModel = new User();
+    $validator = new Validation();
+    
+    // Validate data
+    $errors = $validator->validateDoctorData($postData);
+    
+    // Check if email already exists
+    if (empty($errors) && $userModel->emailExists($postData['email'])) {
+        $errors[] = "Email already exists.";
+    }
+    
+    if (empty($errors)) {
+        // Add doctor
+        $result = $userModel->registerDoctor(
+            $postData['name'],
+            $postData['email'],
+            $postData['password'],
+            $postData['phone'],
+            $postData['specialization']
+        );
+        
+        if ($result) {
+            $_SESSION['success'] = "Dr. " . $postData['name'] . " has been added successfully!";
+            header("Location: ../view/admin-manage-doctor.php");
+            exit();
+        } else {
+            $_SESSION['error'] = "Failed to add doctor. Please try again.";
+            header("Location: ../view/admin-add-doctor.php");
+            exit();
+        }
+    } else {
+        $_SESSION['error'] = implode("\n", $errors);
+        header("Location: ../view/admin-add-doctor.php");
+        exit();
+    }
+}
+
+function handleDeleteDoctor($id) {
+    $doctorModel = new Doctor();
+    
+    if ($id > 0) {
+        if ($doctorModel->deleteDoctor($id)) {
+            $_SESSION['success'] = "Doctor deactivated successfully!";
+        } else {
+            $_SESSION['error'] = "Failed to deactivate doctor.";
+        }
+    }
+    
+    header("Location: ../view/admin-manage-doctor.php");
+    exit();
+}
+
+// Router
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    handleAddDoctor($_POST);
+}
+
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    $id = $_GET['id'] ?? 0;
+    
+    if ($action === 'delete') {
+        handleDeleteDoctor($id);
+    }
+}
+
+// Default redirect
+header("Location: ../view/admin-manage-doctor.php");
+exit();
+?>
