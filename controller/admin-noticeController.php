@@ -3,7 +3,7 @@
 
 session_start();
 
-//require_once __DIR__ . '/../model/Notice.php';
+require_once __DIR__ . '/../model/Notice.php';
 require_once __DIR__ . '/Validation.php';
 
 function handleAddNotice($postData) {
@@ -25,7 +25,7 @@ function handleAddNotice($postData) {
             header("Location: ../view/admin-notice.php");
             exit();
         } else {
-            $_SESSION['error'] = "Failed to publish notice.";
+            $_SESSION['error'] = "Failed to publish notice. Please try again.";
             header("Location: ../view/admin-notice.php");
             exit();
         }
@@ -52,19 +52,12 @@ function handleDeleteNotice($id) {
 }
 
 // Router
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['submit_notice'])) {
-        handleAddNotice($_POST);
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_notice'])) {
+    handleAddNotice($_POST);
 }
 
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-    $id = $_GET['id'] ?? 0;
-    
-    if ($action === 'delete') {
-        handleDeleteNotice($id);
-    }
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    handleDeleteNotice((int)$_GET['id']);
 }
 
 // Default redirect

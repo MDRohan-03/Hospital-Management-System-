@@ -77,7 +77,7 @@ class Validation {
             if (strlen($data['password']) < 6) {
                 $errors[] = "Password must be at least 6 characters.";
             }
-            if ($data['password'] !== $data['confirm_password']) {
+            if (!isset($data['confirm_password']) || $data['password'] !== $data['confirm_password']) {
                 $errors[] = "Passwords do not match.";
             }
         }

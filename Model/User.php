@@ -1,7 +1,7 @@
 <?php
 // model/User.php
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/database.php';
 
 class User {
     private $conn;
@@ -12,17 +12,32 @@ class User {
     }
 
     public function registerDoctor($name, $email, $password, $phone, $specialization) {
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        // Check if email already exists
+        if ($this->emailExists($email)) {
+            return false;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert into users table
-        $sql = "INSERT INTO users (email, password, role) VALUES ('$email', '$password', 'doctor')";
+        $sql = "INSERT INTO users (email, password, role, username) 
+                VALUES ('$email', '$hashedPassword', 'doctor', '$name')";
 
         if (mysqli_query($this->conn, $sql)) {
             $user_id = mysqli_insert_id($this->conn);
             
             // Insert into doctor table
-            $sql = "INSERT INTO doctor (user_id, name, phone, specialization) VALUES ('$user_id', '$name', '$phone', '$specialization')";
-            return mysqli_query($this->conn, $sql);
+            $sql = "INSERT INTO doctor (user_id, name, phone, specialization) 
+                    VALUES ('$user_id', '$name', '$phone', '$specialization')";
+            
+            if (mysqli_query($this->conn, $sql)) {
+                return true;
+            } else {
+                // Rollback user insertion if doctor insertion fails
+                $sql = "DELETE FROM users WHERE id = '$user_id'";
+                mysqli_query($this->conn, $sql);
+                return false;
+            }
         }
 
         return false;
@@ -35,13 +50,36 @@ class User {
     }
 
     public function updateProfile($oldUsername, $newUsername, $password) {
+        // Check if username already exists (if changed)
+        if ($oldUsername !== $newUsername) {
+            $sql = "SELECT id FROM users WHERE username = '$newUsername' AND username != '$oldUsername'";
+            $result = mysqli_query($this->conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                return false; // Username already taken
+            }
+        }
+
         if (!empty($password)) {
             $hashed = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "UPDATE users SET username = '$newUsername', password = '$hashed' WHERE username = '$oldUsername'";
+            $sql = "UPDATE users 
+                    SET username = '$newUsername', password = '$hashed' 
+                    WHERE username = '$oldUsername'";
         } else {
             $sql = "UPDATE users SET username = '$newUsername' WHERE username = '$oldUsername'";
         }
         return mysqli_query($this->conn, $sql);
+    }
+
+    public function getUserByUsername($username) {
+        $sql = "SELECT * FROM users WHERE username = '$username'";
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_fetch_assoc($result);
+    }
+
+    public function getUserById($id) {
+        $sql = "SELECT * FROM users WHERE id = '$id'";
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_fetch_assoc($result);
     }
 }
 ?>

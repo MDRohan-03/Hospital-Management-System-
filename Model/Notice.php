@@ -1,7 +1,7 @@
 <?php
 // model/Notice.php
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/database.php';
 
 class Notice {
     private $conn;
@@ -12,7 +12,10 @@ class Notice {
     }
 
     public function getAllNotices() {
-        $sql = "SELECT n.*, u.name as created_by_name FROM notices n JOIN users u ON n.created_by = u.id ORDER BY n.created_at DESC";
+        $sql = "SELECT n.*, u.username as created_by_name 
+                FROM notices n 
+                LEFT JOIN users u ON n.created_by = u.id 
+                ORDER BY n.created_at DESC";
         $result = mysqli_query($this->conn, $sql);
 
         $notices = [];
@@ -23,7 +26,8 @@ class Notice {
     }
 
     public function addNotice($title, $content, $created_by) {
-        $sql = "INSERT INTO notices (title, content, created_by) VALUES ('$title', '$content', '$created_by')";
+        $sql = "INSERT INTO notices (title, content, created_by) 
+                VALUES ('$title', '$content', '$created_by')";
         return mysqli_query($this->conn, $sql);
     }
 
@@ -36,7 +40,7 @@ class Notice {
         $sql = "SELECT COUNT(*) as total FROM notices";
         $result = mysqli_query($this->conn, $sql);
         $row = mysqli_fetch_assoc($result);
-        return $row['total'] ?? 0;
+        return (int)($row['total'] ?? 0);
     }
 }
 ?>

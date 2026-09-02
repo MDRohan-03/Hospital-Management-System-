@@ -1,19 +1,12 @@
 <?php
 session_start();
-/*
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-*/
+
 require_once __DIR__ . '/../model/Doctor.php';
 
 $doctorModel = new Doctor();
 $doctors = $doctorModel->getAllDoctors();
 $doctorCount = $doctorModel->getDoctorCount();
-
-// Get any session messages
+ 
 $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
@@ -25,30 +18,17 @@ unset($_SESSION['success'], $_SESSION['error']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Doctors - Hospital Management System</title>
     <link rel="stylesheet" href="../Assets/style.css">
+     
 </head>
 <body>
     <?php include 'nav.php'; ?>
 
-    <div class="main-content">
-        <div class="page-header">
-            <h1>Manage Doctors</h1>
-            <a href="admin-add-doctor.php" class="btn-add-doctor">
-                ➕ Add New Doctor
-            </a>
-        </div>
-
-        <?php if($success): ?>
-            <div class="alert alert-success">
-                <?php echo $success; ?>
-                <span class="close-btn" onclick="this.parentElement.style.display='none'">&times;</span>
-            </div>
+    <div class="main-content" style="padding: 20px; max-width: 1200px; margin: 0 auto;">
+        <?php if ($success): ?>
+            <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
-
-        <?php if($error): ?>
-            <div class="alert alert-danger">
-                <?php echo $error; ?>
-                <span class="close-btn" onclick="this.parentElement.style.display='none'">&times;</span>
-            </div>
+        <?php if ($error): ?>
+            <div class="alert alert-error"><?php echo nl2br($error); ?></div>
         <?php endif; ?>
 
         <div class="doctor-table">
@@ -59,9 +39,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                         Total: <span><?php echo $doctorCount; ?></span> doctors
                     </div>
                 </div>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search doctors..." onkeyup="searchDoctor()">
-                </div>
+                <a href="admin-add-doctor.php" class="btn-add">+ Add New Doctor</a>
             </div>
 
             <?php if($doctors && count($doctors) > 0): ?>
@@ -98,11 +76,9 @@ unset($_SESSION['success'], $_SESSION['error']);
                                 <td><?php echo htmlspecialchars($doctor['email']); ?></td>
                                 <td><?php echo htmlspecialchars($doctor['phone']); ?></td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-deactivate" onclick="deactivateDoctor(<?php echo $doctor['user_id']; ?>, '<?php echo addslashes($doctor['name']); ?>')">
-                                            🗑️ Deactivate
-                                        </button>
-                                    </div>
+                                    <button class="btn-deactivate" onclick="deactivateDoctor(<?php echo $doctor['user_id']; ?>, '<?php echo addslashes($doctor['name']); ?>')">
+                                        Deactivate
+                                    </button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -111,7 +87,6 @@ unset($_SESSION['success'], $_SESSION['error']);
                 </div>
             <?php else: ?>
                 <div class="empty-state">
-                    <span class="empty-icon">👨‍⚕️</span>
                     <h3>No Doctors Found</h3>
                     <p>Click the "Add New Doctor" button to add your first doctor.</p>
                 </div>
@@ -119,6 +94,12 @@ unset($_SESSION['success'], $_SESSION['error']);
         </div>
     </div>
 
-    <script src="../Assets/js/manage-doctor.js"></script>
+    <script>
+    function deactivateDoctor(id, name) {
+        if (confirm('Are you sure you want to deactivate Dr. ' + name + '?')) {
+            window.location.href = '../controller/admin-doctorController.php?action=delete&id=' + id;
+        }
+    }
+    </script>
 </body>
 </html>
