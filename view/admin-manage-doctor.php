@@ -28,7 +28,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
         <?php if ($error): ?>
-            <div class="alert alert-error"><?php echo nl2br($error); ?></div>
+            <div class="alert alert-error"><?php echo $error; ?></div>
         <?php endif; ?>
 
         <div class="doctor-table">

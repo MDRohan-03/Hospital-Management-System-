@@ -22,7 +22,7 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
             <div class="alert alert-success"><?php echo $profileSuccess; ?></div>
         <?php endif; ?>
         <?php if ($profileError): ?>
-            <div class="alert alert-error"><?php echo nl2br($profileError); ?></div>
+            <div class="alert alert-error"><?php echo $profileError; ?></div>
         <?php endif; ?>
 
         <div class="profile-container">
@@ -58,6 +58,6 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
             </form>
         </div>
     </div>
-    <script src="/../Assets/js/edit-profile.js"></script>
+    
 </body>
 </html>

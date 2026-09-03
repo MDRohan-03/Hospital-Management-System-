@@ -6,10 +6,10 @@ require_once __DIR__ . '/../model/Doctor.php';
 function validateName($name) {
     $name = trim($name);
     if (empty($name)) {
-        return "Please enter the doctor's full name.";
+        return "Please Properly";
     }
     if (strlen($name) < 3) {
-        return "Name must be at least 3 characters long.";
+        return "Please Properly";
     }
     return null;
 }
@@ -17,10 +17,10 @@ function validateName($name) {
 function validateEmail($email) {
     $email = trim($email);
     if (empty($email)) {
-        return "Please enter the doctor's email address.";
+        return "Please Properly";
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return "Please enter a valid email address.";
+        return "Please Properly";
     }
     return null;
 }
@@ -28,27 +28,27 @@ function validateEmail($email) {
 function validatePhone($phone) {
     $phone = trim($phone);
     if (empty($phone)) {
-        return "Please enter the doctor's phone number.";
+        return "PPlease Properly";
     }
     if (!preg_match('/^[0-9+\-\s]{10,15}$/', $phone)) {
-        return "Please enter a valid phone number.";
+        return "Please Properly";
     }
     return null;
 }
 
 function validateSpecialization($specialization) {
     if (empty($specialization)) {
-        return "Please select the doctor's specialization.";
+        return "Please Properly";
     }
     return null;
 }
 
 function validatePassword($password) {
     if (empty($password)) {
-        return "Please enter a password.";
+        return "Please Properly";
     }
     if (strlen($password) < 6) {
-        return "Password must be at least 6 characters.";
+        return "Please Properly";
     }
     return null;
 }

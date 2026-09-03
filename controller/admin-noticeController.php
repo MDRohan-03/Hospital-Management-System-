@@ -1,20 +1,15 @@
 <?php
-// controller/admin-noticeController.php
-
 session_start();
-
 require_once __DIR__ . '/../model/Notice.php';
 require_once __DIR__ . '/Validation.php';
 
 function handleAddNotice($postData) {
     $noticeModel = new Notice();
     $validator = new Validation();
-    
-    // Get form data
+     
     $title = $postData['title'] ?? '';
     $description = $postData['description'] ?? '';
-    
-    // Validate data
+     
     $errors = $validator->validateNoticeData($postData);
     
     if (empty($errors)) {
@@ -50,8 +45,7 @@ function handleDeleteNotice($id) {
     header("Location: ../view/admin-notice.php");
     exit();
 }
-
-// Router
+ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_notice'])) {
     handleAddNotice($_POST);
 }
@@ -59,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_notice'])) {
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
     handleDeleteNotice((int)$_GET['id']);
 }
-
-// Default redirect
+ 
 header("Location: ../view/admin-notice.php");
 exit();
 ?>

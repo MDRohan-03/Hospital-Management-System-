@@ -30,7 +30,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php endif; ?>
             <?php if ($error): ?>
-                <div class="alert alert-error"><?php echo nl2br($error); ?></div>
+                <div class="alert alert-error"><?php echo $error; ?></div>
             <?php endif; ?>
             <div class="notice-form-container">
                 <h2>Publish New Notice</h2>
@@ -83,9 +83,6 @@ unset($_SESSION['success'], $_SESSION['error']);
                     </div>
                 <?php endif; ?>
             </div>
-            
-            
- 
         </div>
     </div>
 

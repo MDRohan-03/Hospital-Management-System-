@@ -24,11 +24,7 @@
     if (email === "") {
         document.getElementById('emailError').innerHTML = "Please enter the doctor's email address.";
         flag = false;
-    } else if (!email.includes('@') || !email.includes('.')) {
-        document.getElementById('emailError').innerHTML = "Please enter a valid email address.";
-        flag = false;
-    }
- 
+    }  
     if (phone === "") {
         document.getElementById('phoneError').innerHTML = "Please enter the doctor's phone number.";
         flag = false;
