@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +10,17 @@
        <link rel="stylesheet" href="index.css">
     </head>
 <body>
-    <ul style=" background:blue ;display:flex ;justify-content: space-between;padding:0 20px;list-style: none;">
+  <nav>
+    <ul>
+        <li><a href="index.php">Dashboard</a></li>
         <li><a href="profile.php">Profile</a></li>
         <li><a href="appointments.php">Appointments</a></li>
-        <li><a href="consultation.php">Availability<a/></li>
-        <li><button>Logout</button></li>
+        <li><a href="consultation.php">Consultation</a></li>
+        <li><a href="patienthistory.php">Patient History</a></li>
+        <li><a href="../../controller/logout.php">Logout</a></li>
     </ul>
+</nav>
 </body>
 </html>
+
+

@@ -1,3 +1,9 @@
+
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +14,13 @@
 </head>
 <body>
     <?php
-include "nav.php"
+include "docNav.php"
 
 ?>
 
-  <h2>Welcome , Joboraz</h2>  
+  <h2>Welcome , <?php echo isset($_SESSION['name']) ? $_SESSION['name'] : ''; ?></h2>  
+  <p>
+Total requested patients : 6682 
+  </p>
 </body>
 </html>
