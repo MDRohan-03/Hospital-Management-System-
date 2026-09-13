@@ -1,13 +1,36 @@
 <?php
 session_start();
 require '../model/adminModel.php';
+ 
+if (isset($_GET['check_username'])) {
+    $username = trim($_GET['check_username']);
+
+    if (strlen($username) < 3) {
+        echo "Username must be at least 3 characters.";
+        exit();
+    }
+
+    $currentUsername = $_SESSION['username'] ?? '';
+    if ($username === $currentUsername) {
+        echo "This is your current username.";
+        exit();
+    }
+
+    $userData = getUserByUsername($username);
+    if ($userData) {
+        echo "Username already taken.";
+    } else {
+        echo "Username is available!";
+    }
+    exit();
+}
 
 function validateProfileData($data) {
     $errors = [];
     
     $username = trim($data['username'] ?? '');
     if (empty($username) || strlen($username) < 3) {
-        $errors[] = "Username must be at least 3 characters.";
+        $errors['username'] = "Username must be at least 3 characters.";
     }
     
     $password = $data['password'] ?? '';
@@ -15,10 +38,10 @@ function validateProfileData($data) {
     
     if (!empty($password)) {
         if (strlen($password) < 6) {
-            $errors[] = "Password must be at least 6 characters.";
+            $errors['password'] = "Password must be at least 6 characters.";
         }
         if ($password !== $confirmPassword) {
-            $errors[] = "Passwords do not match.";
+            $errors['confirm_password'] = "Passwords do not match.";
         }
     }
     
@@ -27,28 +50,19 @@ function validateProfileData($data) {
 
 function handleUpdateProfile($postData) {
     $errors = validateProfileData($postData);
+    $currentUsername = $_SESSION['username'] ?? '';
+    $newUsername = $postData['username'];
+    $password = $postData['password'] ?? '';
     
-    if (empty($errors)) {
-        $currentUsername = $_SESSION['username'] ?? '';
-        $newUsername = $postData['username'];
-        $password = $postData['password'] ?? '';
-       
-        if ($currentUsername !== $newUsername) {
-            $userData = getUserByUsername($newUsername);
-            if ($userData && $userData['username'] !== $currentUsername) {
-                $errors[] = "Username already taken. Please choose another.";
-            }
+    if (empty($errors) && $currentUsername !== $newUsername) {
+        $userData = getUserByUsername($newUsername);
+        if ($userData && $userData['username'] !== $currentUsername) {
+            $errors['username'] = "Username already taken. Please choose another.";
         }
     }
     
     if (empty($errors)) {
-        $result = updateProfile(
-            $currentUsername,
-            $newUsername,
-            $password
-        );
-        
-        if ($result) {
+        if (updateProfile($currentUsername, $newUsername, $password)) {
             $_SESSION['username'] = $newUsername;
             $_SESSION['profileSuccess'] = "Profile updated successfully!";
         } else {

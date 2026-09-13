@@ -1,6 +1,6 @@
 <?php
 session_start();
- 
+
 $profileSuccess = $_SESSION['profileSuccess'] ?? null;
 $profileError = $_SESSION['profileError'] ?? null;
 unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
@@ -26,28 +26,27 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
 
         <div class="profile-container">
             <h2>Edit Profile</h2>
-                        
+
             <form action="../controller/admin-profileController.php" method="POST">
                 <div class="form-group">
                     <label for="username">New Username </label>
-                    <input type="text" name="username" id="username" 
-                           placeholder="Enter new username">
-                    <span id="usernameError" class="error"></span>
+                    <input type="text" name="username" id="username"
+                           placeholder="Enter new username"
+                           onkeyup="showHint(this.value)">
+                    <p>Status: <span id="txtHint"></span></p>
                 </div>
 
                 <div class="form-group">
                     <label for="password">New Password</label>
-                    <input type="password" name="password" id="password" 
+                    <input type="password" name="password" id="password"
                            placeholder="Enter new password (optional)">
                     <div class="form-hint">Minimum 6 characters. Leave empty to keep current password.</div>
-                    <span id="passwordError" class="error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" id="confirm_password" 
+                    <input type="password" name="confirm_password" id="confirm_password"
                            placeholder="Confirm new password">
-                    <span id="confirmPasswordError" class="error"></span>
                 </div>
 
                 <div class="form-actions">
@@ -57,5 +56,22 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
             </form>
         </div>
     </div>
+     <script>
+    function showHint(str) {
+        if (str.length == 0) {
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "../controller/admin-profileController.php?check_username=" + encodeURIComponent(str), true);
+            xmlhttp.send();
+        }
+    }
+    </script>
 </body>
 </html>
