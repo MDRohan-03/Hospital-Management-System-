@@ -4,7 +4,6 @@ session_start();
 $profileSuccess = $_SESSION['profileSuccess'] ?? null;
 $profileError = $_SESSION['profileError'] ?? null;
 unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
- 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +14,7 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
     <link rel="stylesheet" href="../Assets/style.css">
 </head>
 <body>
-    <?php include 'nav.php'; ?>
+    <?php include 'admin-nav.php'; ?>
 
     <div class="main-content" style="padding: 30px 20px; max-width: 1200px; margin: 0 auto;">
         <?php if ($profileSuccess): ?>
@@ -28,11 +27,11 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
         <div class="profile-container">
             <h2>Edit Profile</h2>
                         
-            <form action="../controller/admin-profileController.php" method="POST" onsubmit="return validateProfileForm()">
+            <form action="../controller/admin-profileController.php" method="POST">
                 <div class="form-group">
-                    <label for="username">New Username <span style="color: red;">*</span></label>
+                    <label for="username">New Username </label>
                     <input type="text" name="username" id="username" 
-                           placeholder="Enter new username" required>
+                           placeholder="Enter new username">
                     <span id="usernameError" class="error"></span>
                 </div>
 
@@ -58,6 +57,5 @@ unset($_SESSION['profileSuccess'], $_SESSION['profileError']);
             </form>
         </div>
     </div>
-    
 </body>
 </html>

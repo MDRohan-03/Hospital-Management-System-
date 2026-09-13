@@ -3,22 +3,22 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Doctor - Hospital Management System</title>
-    <link rel="stylesheet" href="../Assets/style.css">
-</head>
-<body>
+   <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add New Doctor - Hospital Management System</title>
+        <link rel="stylesheet" href="../Assets/style.css">
+    </head>
+    <body>
+        <?php include 'admin-nav.php'; ?>
 
-    <?php include 'nav.php'; ?>
+         <div class="main-content">
+             
+            <div class="form-container">
+                <h2>Add New Doctor</h2>
 
-    <div class="main-content">
-        <div class="form-container">
-            <h2>Add New Doctor</h2>
-
-            <form method="post" action="../controller/admin-doctorController.php" onsubmit="return validateDoctorForm(this)">
-                <input type="hidden" name="submit_doctor" value="1">
+             <form method="post" action="../controller/admin-doctorController.php" onsubmit="return validateDoctorForm(this)">
+                 
                 
                 <div class="form-row">
                     <div class="form-group">
@@ -65,14 +65,13 @@ session_start();
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn-submit">Add Doctor</button>
+                    <button type="submit"  name="submit_doctor" class="btn-submit">Add Doctor</button>
                     <a href="admin-manage-doctor.php" class="btn-cancel">Cancel</a>
                 </div>
             </form>
         </div>
-         
     </div>
 
-    <script src="../Assets/js/add-doctor.js"></script>
+    <script src="../assets/js/add-doctor.js"></script>
 </body>
 </html>

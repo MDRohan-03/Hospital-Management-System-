@@ -8,18 +8,18 @@ function validateNoticeForm() {
     document.getElementById('noticeDescriptionError').innerHTML = '';
  
     if (title === "") {
-        document.getElementById('noticeTitleError').innerHTML = "Please enter a notice title.";
+        document.getElementById('noticeTitleError').innerHTML = "  a notice title.";
         flag = false;
     } else if (title.length < 5) {
-        document.getElementById('noticeTitleError').innerHTML = "Title must be at least 5 characters.";
+        document.getElementById('noticeTitleError').innerHTML = " 5 characters.";
         flag = false;
     }
  
     if (description === "") {
-        document.getElementById('noticeDescriptionError').innerHTML = "Please enter notice description.";
+        document.getElementById('noticeDescriptionError').innerHTML = "  description.";
         flag = false;
     } else if (description.length < 10) {
-        document.getElementById('noticeDescriptionError').innerHTML = "Description must be at least 10 characters.";
+        document.getElementById('noticeDescriptionError').innerHTML = " least 10 characters.";
         flag = false;
     }
 

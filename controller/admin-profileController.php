@@ -1,58 +1,40 @@
 <?php
 session_start();
-require_once __DIR__ . '/../model/User.php';
- 
-function validateUsername($username) {
-    $username = trim($username);
-    if (empty($username)) {
-        return "Username is required.";
-    }
-    if (strlen($username) < 3) {
-        return "Username must be at least 3 characters.";
-    }
-    return null;
-}
-
-function validateProfilePassword($password, $confirmPassword) {
-    if (!empty($password)) {
-        if (strlen($password) < 6) {
-            return "Password must be at least 6 characters.";
-        }
-        if ($password !== $confirmPassword) {
-            return "Passwords do not match.";
-        }
-    }
-    return null;
-}
+require '../model/adminModel.php';
 
 function validateProfileData($data) {
     $errors = [];
     
-    $usernameError = validateUsername($data['username'] ?? '');
-    if ($usernameError) $errors[] = $usernameError;
+    $username = trim($data['username'] ?? '');
+    if (empty($username) || strlen($username) < 3) {
+        $errors[] = "Username must be at least 3 characters.";
+    }
     
-    $passwordError = validateProfilePassword(
-        $data['password'] ?? '',
-        $data['confirm_password'] ?? ''
-    );
-    if ($passwordError) $errors[] = $passwordError;
+    $password = $data['password'] ?? '';
+    $confirmPassword = $data['confirm_password'] ?? '';
+    
+    if (!empty($password)) {
+        if (strlen($password) < 6) {
+            $errors[] = "Password must be at least 6 characters.";
+        }
+        if ($password !== $confirmPassword) {
+            $errors[] = "Passwords do not match.";
+        }
+    }
     
     return $errors;
 }
 
 function handleUpdateProfile($postData) {
-    $userModel = new User();
-     
     $errors = validateProfileData($postData);
     
     if (empty($errors)) {
-    
         $currentUsername = $_SESSION['username'] ?? '';
         $newUsername = $postData['username'];
         $password = $postData['password'] ?? '';
        
         if ($currentUsername !== $newUsername) {
-            $userData = $userModel->getUserByUsername($newUsername);
+            $userData = getUserByUsername($newUsername);
             if ($userData && $userData['username'] !== $currentUsername) {
                 $errors[] = "Username already taken. Please choose another.";
             }
@@ -60,7 +42,7 @@ function handleUpdateProfile($postData) {
     }
     
     if (empty($errors)) {
-        $result = $userModel->updateProfile(
+        $result = updateProfile(
             $currentUsername,
             $newUsername,
             $password
@@ -83,7 +65,6 @@ function handleUpdateProfile($postData) {
 if (isset($_POST['update_profile'])) {
     handleUpdateProfile($_POST);
 } else {
-   
     header("Location: ../view/admin-edit-profile.php");
     exit();
 }

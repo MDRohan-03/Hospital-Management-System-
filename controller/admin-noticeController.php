@@ -1,41 +1,47 @@
 <?php
 session_start();
-require_once __DIR__ . '/../model/Notice.php';
-require_once __DIR__ . '/Validation.php';
+require '../model/adminNotice.php';
+
+function validateNoticeData($data) {
+    $errors = [];
+    
+    $title = trim($data['title'] ?? '');
+    if (empty($title) || strlen($title) < 5) {
+        $errors[] = "  least 5 characters.";
+    }
+    
+    $description = trim($data['description'] ?? '');
+    if (empty($description) || strlen($description) < 10) {
+        $errors[] = "  at least 10 characters.";
+    }
+    
+    return $errors;
+}
 
 function handleAddNotice($postData) {
-    $noticeModel = new Notice();
-    $validator = new Validation();
-     
-    $title = $postData['title'] ?? '';
-    $description = $postData['description'] ?? '';
-     
-    $errors = $validator->validateNoticeData($postData);
+    $errors = validateNoticeData($postData);
     
     if (empty($errors)) {
+        $title = $postData['title'] ?? '';
+        $description = $postData['description'] ?? '';
         $created_by = $_SESSION['user_id'] ?? 1;
         
-        if ($noticeModel->addNotice($title, $description, $created_by)) {
+        if (addNotice($title, $description, $created_by)) {
             $_SESSION['success'] = "Notice published successfully!";
-            header("Location: ../view/admin-notice.php");
-            exit();
         } else {
             $_SESSION['error'] = "Failed to publish notice. Please try again.";
-            header("Location: ../view/admin-notice.php");
-            exit();
         }
     } else {
         $_SESSION['error'] = implode("\n", $errors);
-        header("Location: ../view/admin-notice.php");
-        exit();
     }
+    
+    header("Location: ../view/admin-notice.php");
+    exit();
 }
 
 function handleDeleteNotice($id) {
-    $noticeModel = new Notice();
-    
     if ($id > 0) {
-        if ($noticeModel->deleteNotice($id)) {
+        if (deleteNotice($id)) {
             $_SESSION['success'] = "Notice deleted successfully!";
         } else {
             $_SESSION['error'] = "Failed to delete notice.";

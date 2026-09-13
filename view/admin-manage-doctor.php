@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../model/Doctor.php';
-
-$doctorModel = new Doctor();
-$doctors = $doctorModel->getAllDoctors();
-$doctorCount = $doctorModel->getDoctorCount();
- 
 $success = $_SESSION['success'] ?? null;
 $error = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
@@ -18,10 +12,9 @@ unset($_SESSION['success'], $_SESSION['error']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Doctors - Hospital Management System</title>
     <link rel="stylesheet" href="../Assets/style.css">
-     
 </head>
 <body>
-    <?php include 'nav.php'; ?>
+    <?php include 'admin-nav.php'; ?>
 
     <div class="main-content" style="padding: 20px; max-width: 1200px; margin: 0 auto;">
         <?php if ($success): ?>
@@ -42,7 +35,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <a href="admin-add-doctor.php" class="btn-add">+ Add New Doctor</a>
             </div>
 
-            <?php if($doctors && count($doctors) > 0): ?>
+            <?php if(isset($doctors) && $doctors && count($doctors) > 0): ?>
                 <div class="table-responsive">
                     <table>
                         <thead>
