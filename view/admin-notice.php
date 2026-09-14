@@ -19,53 +19,57 @@ unset($_SESSION['success'], $_SESSION['error']);
     <div class="main-content">
         <div class="notice-container">
             <h1>Notice Management</h1>
+
             <?php if ($success): ?>
-                <div class="alert alert-success"><?php echo $success; ?></div>
+                <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
             <?php endif; ?>
             <?php if ($error): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
+                <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>
+
             <div class="notice-form-container">
                 <h2>Publish New Notice</h2>
                 <form action="../controller/admin-noticeController.php" method="POST" onsubmit="return validateNoticeForm()">
                     <div class="form-group">
-                        <label for="title">Notice Title  </label>
+                        <label for="title">Notice Title</label>
                         <input type="text" id="title" name="title" placeholder="Enter notice title" required>
                         <span id="noticeTitleError" class="error"></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Description  </label>
-                        <textarea id="description" name="description" placeholder="Enter notice description" required></textarea>
+                        <label for="content">Description</label>
+                        <textarea id="content" name="content" placeholder="Enter notice description" required></textarea>
                         <span id="noticeDescriptionError" class="error"></span>
                     </div>
 
                     <button type="submit" name="submit_notice" class="btn-publish">Publish Notice</button>
                 </form>
             </div>
- 
+
             <div class="notice-list">
                 <div class="notice-header">
                     <h3>All Notices</h3>
-                    <span class="notice-count">Total: <?php echo $noticeCount; ?> notices</span>
+                    <span class="notice-count">Total: <?php echo isset($noticeCount) ? (int)$noticeCount : 0; ?> notices</span>
                 </div>
 
-                <?php if (isset($notices) && $notices && count($notices) > 0): ?>
+                <?php if (!empty($notices)): ?>
                     <?php foreach ($notices as $notice): ?>
-                    <div class="notice-item">
-                        <div class="notice-title">
-                            <?php echo htmlspecialchars($notice['title']); ?>
+                        <div class="notice-item">
+                            <div class="notice-title">
+                                <?php echo htmlspecialchars($notice['title']); ?>
+                            </div>
+
+                            <div class="notice-content">
+                                <?php echo nl2br(htmlspecialchars($notice['content'])); ?>
+                            </div>
+
+                            <div class="notice-actions">
+                                <button class="btn-delete-notice"
+                                    onclick="deleteNotice(<?php echo (int)$notice['id']; ?>, '<?php echo htmlspecialchars(addslashes($notice['title']), ENT_QUOTES); ?>')">
+                                    Delete
+                                </button>
+                            </div>
                         </div>
-                        
-                        <div class="notice-content">
-                            <?php echo nl2br(htmlspecialchars($notice['content'])); ?>
-                        </div>
-                        <div class="notice-actions">
-                            <button class="btn-delete-notice" onclick="deleteNotice(<?php echo $notice['id']; ?>, '<?php echo addslashes($notice['title']); ?>')">
-                               Delete
-                            </button>
-                        </div>
-                    </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="empty-state">
