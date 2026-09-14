@@ -20,10 +20,10 @@ include "docNav.php"
 
 ?>
     <h2 >Patient's List</h2>
-<form style="width:50%;margin :20px auto;">
+<!-- <form style="width:50%;margin :20px auto;">
     <input type="text" name="search" placeholder="Enter patient name...">
     <input type="submit" style="color:white;background-color: green;border: none;" value="Search">
-</form>
+</form> -->
     <table >
   <tr style="background-color: lightgray;">
 <th>Time</th>

@@ -1,8 +1,8 @@
 <?php 
 require_once __DIR__ . '/../dbConnection.php';
 
-function getUserByEmail($email) {
-    global $conn;
+function getDoctorByEmail($email) {
+   $conn = connect();
 
     $sql = "SELECT * FROM doctors WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
@@ -14,7 +14,7 @@ function getUserByEmail($email) {
 }
 
 function createUser($name, $email, $password, $role) {
-    global $conn;
+    $conn = connect();
 
     $sql = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
     if (mysqli_query($conn, $sql)) {
@@ -25,7 +25,7 @@ function createUser($name, $email, $password, $role) {
 }
 function createDoctor($name, $email, $password, $phone, $specialization, $licenseNumber, $consultationFee, $yoe, $bio)
 {
-    global $conn;
+    $conn = connect();
 
     $sql = "INSERT INTO doctors
             (name, email, password, phone, medicalLicenseNumber,
@@ -40,25 +40,23 @@ function createDoctor($name, $email, $password, $phone, $specialization, $licens
         return false;
     }
 }
-function updateProfile($name, $email, $phone, $specialization, $licenseNumber, $consultationFee, $yoe, $bio)
+function updateDoctorProfile($name,  $phone, $specialization, $licenseNumber, $consultationFee, $yoe, $bio)
 {
-    global $conn;
+    $conn = connect();
 
     $sql = "UPDATE doctors
-            SET name = '$name',
-                email = '$email',
-                phone = '$phone',
-                specialization = '$specialization',
-                medicalLicenseNumber = '$licenseNumber',
-                consultationFee = '$consultationFee',
-                yearsOfExperience = '$yoe',
-                bio = '$bio'
-            WHERE email = '$email'";
+SET name = '$name',phone = '$phone',
+specialization = '$specialization',
+medicalLicenseNumber = '$licenseNumber',
+consultationFee = '$consultationFee',
+yearsOfExperience = '$yoe',
+bio = '$bio'
+WHERE email = '$email'";
 
-    if (mysqli_query($conn, $sql)) {
-        return true;
-    } else {
-        return false;
+if (mysqli_query($conn, $sql)) {
+return true;
+} else {
+return false;
     }
 }
 

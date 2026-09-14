@@ -1,8 +1,9 @@
 <?php
 
 session_start();
-
-include "../../model/doctor/consultationModel.php";
+$consultations = isset($_SESSION['consultation'])
+    ? $_SESSION['consultation']
+    : [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,20 +17,15 @@ include "../../model/doctor/consultationModel.php";
 <body>
 
 <?php include "docNav.php" ?>
-    <div style="width: 500px; margin: 20px auto; padding: 20px; border: 1px solid black; border-radius: 10px;">
-
-        <h1>Consultation Hours</h1>
-        <?php
-        if (isset($_SESSION['dbErrmsg']) && !empty($_SESSION['dbErrmsg'])) {
-            echo "<p style='color:red'>" . $_SESSION['dbErrmsg'] . "</p>";
-            unset($_SESSION['dbErrmsg']);
-        }
-        if (isset($_SESSION['dbSuccessmsg']) && !empty($_SESSION['dbSuccessmsg'])) {
-            echo "<p style='color:green'>" . $_SESSION['dbSuccessmsg'] . "</p>";
-            unset($_SESSION['dbSuccessmsg']);
-        }
-        ?>
-        <form method="post" action="../../controller/doctor/consultationController.php" onsubmit="return validateForm(this)">
+<div style="width: 500px; margin: 20px auto; padding: 20px; border: 1px solid black; border-radius: 10px;">
+<h1>Consultation Hours</h1>
+<?php if (isset($_SESSION['dbErrmsg']) && !empty($_SESSION['dbErrmsg'])) {
+echo "<p style='color:red'>" . $_SESSION['dbErrmsg'] . "</p>";
+unset($_SESSION['dbErrmsg']);}
+if (isset($_SESSION['dbSuccessmsg']) && !empty($_SESSION['dbSuccessmsg'])) {
+echo "<p style='color:green'>" . $_SESSION['dbSuccessmsg'] . "</p>";
+unset($_SESSION['dbSuccessmsg']);}?>
+<form method="post" action="../../controller/doctor/consultationController.php" onsubmit="return validateForm(this)">
 
             <label for="day">Select a day:</label>
 
@@ -84,47 +80,69 @@ include "../../model/doctor/consultationModel.php";
     </div>
 
     <!-- table -->
-    <h3>Availability</h3>
-    <table>
-        <tr>
-            <th>Day </th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Action</th>
-        </tr>
+ <h3>Availability</h3>
 
-        <?php
-        $consultations = getAllConsultations();
-        while ($row = mysqli_fetch_assoc($consultations)) {
-        ?>
-            <tr>
-                <td><?php echo $row['day']; ?></td>
-                <td><?php echo $row['startTime']; ?></td>
-                <td><?php echo $row['endTime']; ?></td>
+<table>
+<tr>
+<th>Day</th>
+<th>Start Time</th>
+<th>End Time</th>
+<th>Action</th>
+    </tr>
 
-                <td style="text-align: center;">
+    <?php
 
-                   <a href="updateConsultation.php?id=<?php echo $row['id']; ?>">
-    <button type="button" style="color:green;">Edit</button>
+if (!empty($consultations)) {
+
+foreach ($consultations as $consultation) {
+    ?>
+<tr>
+<td><?php echo $consultation['day']; ?></td>
+
+<td><?php echo $consultation['startTime']; ?></td>
+
+<td><?php echo $consultation['endTime']; ?></td>
+
+<td style="text-align: center;">
+
+<a href="../../controller/doctor/consultationController.php?id=<?php echo $consultation['id']; ?>">
+<button type="button" style="color:green;">
+Edit
+</button>
 </a>
-              
-<form method="post" action="../../controller/doctor/consultationController.php" style="display:inline;">
-    
-    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 
-    <button type="submit" name="action" value="delete" style="color:red;">
-        Delete
-    </button>
+<form method="post" action="../../controller/doctor/consultationController.php"
+style="display:inline;">
+<input type="hidden" name="id" value="<?php echo $consultation['id']; ?>"
+>
+
+<button type="submit"
+name="action"
+value="delete" style="color:red;">Delete
+</button>
+
 </form>
-                   
-                   
-                </td>
-            </tr>
-        <?php
-        }
-        ?>
-    </table>
 
+</td>
+</tr>
+
+<?php
+ }
+
+    } else {
+?>
+
+<tr>
+<td colspan="4">No consultation hours available.</td>
+</tr>
+
+    <?php
+
+    }
+
+    ?>
+
+</table>
     <script src="../js/consultation.js"></script>
 
 </body>

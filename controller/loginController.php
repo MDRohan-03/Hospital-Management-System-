@@ -13,73 +13,59 @@ $req = $_SERVER['REQUEST_METHOD'];
 if ($req === "POST") {
 
     $email = $_POST['email'];
-    $password = $_POST['password'];
+$password = $_POST['password'];
 
     $flag = true;
 
-    // Email validation
+  
     if (empty($email)) {
-        $flag = false;
-        $_SESSION['emailErrMsg'] = "Please fill up the email properly";
-    } else {
-        $_SESSION['email'] = $email;
+$flag = false;
+$_SESSION['emailErrMsg'] = "Please fill up the email properly";
+} else {
+$_SESSION['email'] = $email;
+ }
+
+if (empty($password)) {
+$flag = false;
+$_SESSION['passwordErrMsg'] = "Please fill up the password properly";
     }
 
-    // Password validation
-    if (empty($password)) {
-        $flag = false;
-        $_SESSION['passwordErrMsg'] = "Please fill up the password properly";
-    }
-
-    // If validation is successful
     if ($flag) {
+$user = login($email, $password);
+if ($user !== null) {
+$_SESSION['isLoggedIn'] = true;
 
-        $user = login($email, $password);
+$_SESSION["name"] = $user["name"];
+$_SESSION["role"] = $user["role"];
+$_SESSION["email"] = $user["email"];
 
-        // Check login
-        if ($user !== null) {
-            $_SESSION['isloggedin'] = true;
+if ($user["role"] === "patient") {
 
-            $_SESSION["name"] = $user["name"];
-            $_SESSION["role"] = $user["role"];
-            $_SESSION["email"] = $user["email"];
+header("Location: ../view/patient/patient_Dashboard.php");
+exit();
+} elseif ($user["role"] === "doctor") {
+header("Location: ../view/doctor/index.php");
+exit();
+} elseif ($user["role"] === "admin") {
+header("Location: ../view/admin/adminDashboard.php");
+exit();
 
-            if ($user["role"] === "patient") {
+} else {
+$_SESSION['globalErrMsg'] = "Invalid user role";
+header("Location: ../view/login.php");
+exit();
+}
+} else {
 
-                header("Location: ../view/patient/patient_Dashboard.php");
-                exit();
+$_SESSION['globalErrMsg'] = "Email or password does not match";
 
-            } elseif ($user["role"] === "doctor") {
-
-                header("Location: ../view/doctor/index.php");
-                exit();
-
-            } elseif ($user["role"] === "admin") {
-
-                header("Location: ../view/admin/adminDashboard.php");
-                exit();
-
-            } else {
-
-                $_SESSION['globalErrMsg'] = "Invalid user role";
-                header("Location: ../view/login.php");
-                exit();
-            }
-
-        } else {
-
-            // Email/password incorrect
-            $_SESSION['globalErrMsg'] = "Email or password does not match";
-
-            header("Location: ../view/login.php");
-            exit();
-        }
+header("Location: ../view/login.php");
+exit();
+}
 
     } else {
-
-        // Validation failed
-        header("Location: ../view/login.php");
-        exit();
+header("Location: ../view/login.php");
+exit();
     }
 
 } else {

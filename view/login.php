@@ -18,65 +18,42 @@ session_start();
     <div style="width: 500px; margin: 20px auto; padding: 20px; border: 1px solid black; border-radius: 10px;">
 
 
-<form method="post" action="../controller/loginController.php" onsubmit="return validate(this)" >
-                <h1 class="h">Login</h1><br>
+<form method="post" action="../controller/loginController.php" onsubmit="return validate(this)" >     
+<h1 class="h">Login</h1><br>
 
-            <!-- Email -->
-            <div class="d">
-                <label for="email">
-                    Email
-                </label><br>
+   <!-- Email -->
+<div class="d">
+<label for="email">   Email</label><br>
                 
-                <input  type="email"  name="email"  id="email"  placeholder="Enter your email" value="<?php echo htmlspecialchars($_SESSION['email'] ?? ''); ?>" >
+<input  type="email"  name="email"  id="email"  placeholder="Enter your email" value="<?php echo htmlspecialchars($_SESSION['email'] ?? ''); ?>" >
 
-                <?php
-                if (!empty($_SESSION['emailErrMsg'])) {
-                    echo '<div class="error">' .
-                         htmlspecialchars($_SESSION['emailErrMsg']) .
-                         '</div>';
-                }
-                ?>
-            <br>
+<?php if (!empty($_SESSION['emailErrMsg'])) {
+echo '<div class="error">' .htmlspecialchars($_SESSION['emailErrMsg']) . '</div>'; }?>
+<br>
 
-            <!-- Password -->
+<!-- Password -->
             
-                <label for="password">
-                    Password
-                </label><br>
+ <label for="password">Password</label><br>
+<input type="password" name="password" id="password" placeholder="Enter your password">
+<?php if (!empty($_SESSION['passwordErrMsg'])) {
+echo '<div class="error">' .htmlspecialchars($_SESSION['passwordErrMsg']) .'</div>';
+} ?></div><br>
 
-                <input type="password" name="password" id="password" placeholder="Enter your password">
+<!-- Login Button -->
+<div style="text-align: center;">
+<input type="submit" value="Login" class="login-btn" >
+</div><br>
 
-                <?php
-                if (!empty($_SESSION['passwordErrMsg'])) {
-                    echo '<div class="error">' .htmlspecialchars($_SESSION['passwordErrMsg']) .'</div>';
-                }
-                ?>
-            </div><br>
+<!-- Create Account -->
+<div style="text-align: center;">
+<a href="patient/patientRegistration.php"
+class="register-link">Create an account</a>
+</div>
 
-            <!-- Login Button -->
-            <div style="text-align: center;">
-                <input type="submit" value="Login"class="login-btn" >
-            </div><br>
-
-            <!-- Create Account -->
-            <div style="text-align: center;">
-                <a
-                    href="patient/patientRegistration.php"
-                    class="register-link"
-                >
-                    Create an account
-                </a>
-            </div>
-
-            <!-- create doctor -->
-            <div style="text-align: center;">
-                <a
-                    href="doctor/doctorRegistration.php"
-                    class="register-link"
-                >
-                    Create a doctor account
-                </a>
-        </form>
+<!-- create doctor -->
+<div style="text-align: center;">
+<a href="doctor/doctorRegistration.php" class="register-link"
+>Create a doctor account</a></form>
 
         
 
@@ -88,7 +65,6 @@ session_start();
 </html>
 
 <?php
-// Clear the error messages so they don't persist on a fresh page reload
 unset($_SESSION['emailErrMsg']);
 unset($_SESSION['passwordErrMsg']);
 ?>

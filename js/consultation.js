@@ -7,32 +7,32 @@ function validateForm(form) {
 
 let flag = true;
     if (day === "") {
-        alert("Please select a day.");
-        flag = false;
-        return flag;
+alert("Please select a day.");
+flag = false;
+return flag;
     }
 
     if (startTime === "") {
-        alert("Start time is required.");
-        flag = false;
-        return flag;
+ alert("Start time is required.");
+flag = false;
+return flag;
     }
 
     
     if (endTime === "") {
-        alert("End time is required.");
-        flag = false;
-        return flag;
+alert("End time is required.");
+flag = false;
+return flag;
     }
 
     if (endTime <= startTime) {
-        alert("End time must be after start time.");
-        flag = false;
-        return flag;
+alert("End time must be after start time.");
+flag = false;
+return flag;
     }
 
     if(flag===true){
-        alert("Consultation schedule submitted successfully!");}
+alert("Consultation schedule submitted successfully!");}
         
-    return flag;
+ return flag;
 }

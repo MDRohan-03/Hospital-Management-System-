@@ -24,12 +24,12 @@ if (isset($_SESSION['success'])) {
 
 
 
-<form method="post" action="../../controller/doctor/profileController.php" onsubmit="return validateForm(this)">
+<form method="post" action="../../controller/doctor/doctorRegistrationController.php" onsubmit="return validateForm(this)">
 
     <label for="name">Name:</label>
     <input type="text" name="name" id="name"
-           placeholder="" value="<?php echo isset($result['name']) ? $result['name'] : ''; ?>">
-           <?php
+ placeholder="" value="<?php echo isset($result['name']) ? $result['name'] : ''; ?>">
+ <?php
 if (!empty($_SESSION['nameErrMsg'])) {
     echo "<span style='color:red'>" . $_SESSION['nameErrMsg'] . "</span>";
 }
@@ -38,8 +38,8 @@ if (!empty($_SESSION['nameErrMsg'])) {
 
     <label for="email">Email:</label>
     <input type="email" name="email" id="email"
-           placeholder="" value="<?php echo isset($result['email']) ? $result['email'] : ''; ?>">
-           <?php
+placeholder="" value="<?php echo isset($result['email']) ? $result['email'] : ''; ?>">
+ <?php
 if (!empty($_SESSION['emailErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['emailErrMsg'] . "</span>";
 }
@@ -47,8 +47,8 @@ if (!empty($_SESSION['emailErrMsg'])) {
     <br><br>
     <label for="password">Password:</label>
     <input type="password" name="password" id="password"
-           placeholder="" value="<?php echo isset($result['password']) ? $result['password'] : ''; ?>">
-           <?php
+ placeholder="" value="<?php echo isset($result['password']) ? $result['password'] : ''; ?>">
+ <?php
 if (!empty($_SESSION['passwordErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['passwordErrMsg'] . "</span>";
 }
@@ -57,8 +57,8 @@ if (!empty($_SESSION['passwordErrMsg'])) {
 
     <label for="phone">Phone:</label>
     <input type="text" name="phone" id="phone"
-           placeholder="" value="<?php echo isset($result['phone']) ? $result['phone'] : ''; ?>">
-           <?php
+ placeholder="" value="<?php echo isset($result['phone']) ? $result['phone'] : ''; ?>">
+ <?php
 if (!empty($_SESSION['phoneErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['phoneErrMsg'] . "</span>";
 }
@@ -67,7 +67,7 @@ if (!empty($_SESSION['phoneErrMsg'])) {
 
     <label for="specialization">Specialization:</label>
     <input type="text" name="specialization" id="specialization"
-           placeholder="" value="<?php echo isset($result['specialization']) ? $result['specialization'] : ''; ?>">
+placeholder="" value="<?php echo isset($result['specialization']) ? $result['specialization'] : ''; ?>">
            <?php
 if (!empty($_SESSION['specializationErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['specializationErrMsg'] . "</span>";
@@ -77,7 +77,7 @@ if (!empty($_SESSION['specializationErrMsg'])) {
 
     <label for="medicalLicenseNumber">Medical License Number:</label>
     <input type="text" name="medicalLicenseNumber" id="medicalLicenseNumber"
-           placeholder="" value="<?php echo isset($result['medicalLicenseNumber']) ? $result['medicalLicenseNumber'] : ''; ?>">
+ placeholder="" value="<?php echo isset($result['medicalLicenseNumber']) ? $result['medicalLicenseNumber'] : ''; ?>">
            <?php
 if (!empty($_SESSION['licenceErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['licenceErrMsg'] . "</span>";
@@ -87,8 +87,8 @@ if (!empty($_SESSION['licenceErrMsg'])) {
 
     <label for="yearsOfExperience">Years of Experience:</label>
     <input type="number" name="yearsOfExperience" id="yearsOfExperience"
-           min="0" placeholder="5" value="<?php echo isset($result['yearsOfExperience']) ? $result['yearsOfExperience'] : ''; ?>">
-                 <?php
+ min="0" placeholder="5" value="<?php echo isset($result['yearsOfExperience']) ? $result['yearsOfExperience'] : ''; ?>">
+<?php
 if (!empty($_SESSION['yoeErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['yoeErrMsg'] . "</span>";
 }
@@ -97,8 +97,8 @@ if (!empty($_SESSION['yoeErrMsg'])) {
 
     <label for="consultationFee">Consultation Fee:</label>
     <input type="number" name="consultationFee" id="consultationFee"
-           min="0"  placeholder="" value="<?php echo isset($result['consultationFee']) ? $result['consultationFee'] : ''; ?>">
-                 <?php
+min="0"  placeholder="" value="<?php echo isset($result['consultationFee']) ? $result['consultationFee'] : ''; ?>">
+<?php
 if (!empty($_SESSION['feeErrMsg'])) {
        echo "<span style='color:red'>" . $_SESSION['feeErrMsg'] . "</span>";
 }
@@ -106,9 +106,9 @@ if (!empty($_SESSION['feeErrMsg'])) {
     <br><br>
 
     <label for="professionalBio">Professional Bio:</label><br>
-  <textarea name="professionalBio" id="professionalBio" rows="5" cols="50"
+  <textarea name="bio" id="bio" rows="5" cols="50"
     placeholder=""><?php
-    echo isset($result['professionalBio']) ? $result['professionalBio'] : '';
+    echo isset($result['bio']) ? $result['bio'] : '';
 ?></textarea>
 
 <?php
@@ -120,6 +120,7 @@ if (!empty($_SESSION['bioErrMsg'])) {
     <br><br>
 
     <div style="text-align: center;">
+
        <input style="text-align: center;color:blue" type="submit" name="action" value="createDoctor">
     </div>
 
